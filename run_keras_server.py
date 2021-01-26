@@ -73,6 +73,13 @@ def predict():
 
 	# return the data dictionary as a JSON response
 	return flask.jsonify(data)
+@app.route('/')
+def serve():
+	data = {
+		"usage": "curl -X POST -F image=@dog.jpg 'http://localhost:5000/predict'",
+		"note": "Windows Users - use double quotes on URL"
+	}
+    return flask.jsonify(data)
 
 # if this is the main thread of execution first load the model and
 # then start the server
@@ -80,4 +87,4 @@ if __name__ == "__main__":
 	print(("* Loading Keras model and Flask starting server..."
 		"please wait until server has fully started"))
 	load_model()
-	app.run()
+	app.run(host='0.0.0.0')
